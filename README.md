@@ -1,7 +1,7 @@
 # Instructions for Docker 
 
 The following readme gives a short introduction on how to use the docker container on Linux and on Windows.   
-Note that it is not possible to communicate with other hosts (e.g. Turtlebot) via wifi nor lan.
+Note that it is not possible to communicate with other hosts (e.g. Turtlebot) via wifi nor lan if you use docker on Windows.
 
 
 ## Prequisites
