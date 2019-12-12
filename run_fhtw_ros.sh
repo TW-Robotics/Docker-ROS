@@ -19,4 +19,5 @@ docker run \
     --env="DISPLAY=${DISPLAY}" \
     --privileged -v /dev/bus/usb:/dev/bus/usb \
     --net=host \
-    fhtw/ros-melodic bash
+    --name "fhtw_ros"
+    rotrebski/uastw-ie-ros-lv:latest bash
