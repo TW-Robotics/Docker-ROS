@@ -42,8 +42,8 @@ RUN mkdir -p /home/$USERNAME/catkin_ws/src &&\
     cd .. &&\
     /ros_entrypoint.sh catkin_make
 RUN chown $USERNAME:$USERNAME --recursive /home/$USERNAME/catkin_ws
-RUN echo "source /home/$USERNAME/catkin_ws/devel/setup.bash" >> /home/$USERNAME/.bashrc
 RUN echo "source /opt/ros/melodic/setup.bash" >> /home/$USERNAME/.bashrc
+RUN echo "source /home/$USERNAME/catkin_ws/devel/setup.bash" >> /home/$USERNAME/.bashrc
 RUN pip3 install ipython
 RUN pip2 install ipython
 
