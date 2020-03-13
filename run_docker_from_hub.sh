@@ -20,4 +20,4 @@ docker run \
     --privileged -v /dev/bus/usb:/dev/bus/usb \
     --net=host \
     --name "fhtw_ros"
-    rotrebski/uastw-ie-ros-lv:latest bash
+    georgno/fhtw-ros:latest bash
