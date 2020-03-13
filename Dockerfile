@@ -9,6 +9,7 @@ RUN apt update && \
     ros-melodic-costmap-2d ros-melodic-hector-gazebo* ros-melodic-global-planner\
     ros-melodic-turtlebot3* ros-melodic-navigation ros-melodic-pid\
     ros-melodic-rosdoc-lite ros-melodic-gmapping\
+    ros-melodic-rqt*
     && rm -rf /var/lib/apt/lists/
 
 ENV USERNAME fhtw_user
@@ -24,6 +25,7 @@ RUN groupadd --gid $GROUP_ID $USERNAME && \
         echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USERNAME && \
         chmod 0440 /etc/sudoers.d/$USERNAME
 
+RUN echo "export TURTLEBOT3_MODEL=burger" >> /home/$USERNAME/.bashrc
 RUN echo "export ROS_HOSTNAME=\"\$(hostname -I | awk '{print \$1;}')\"" >> /home/$USERNAME/.bashrc
 RUN echo "export ROS_IP=\"\$(hostname -I | awk '{print \$1;}')\"" >> /home/$USERNAME/.bashrc
 RUN echo 'echo "ROS_HOSTNAME=>$ROS_HOSTNAME<"' >> /home/$USERNAME/.bashrc
@@ -45,7 +47,7 @@ RUN chown $USERNAME:$USERNAME --recursive /home/$USERNAME/catkin_ws
 RUN echo "source /opt/ros/melodic/setup.bash" >> /home/$USERNAME/.bashrc
 RUN echo "source /home/$USERNAME/catkin_ws/devel/setup.bash" >> /home/$USERNAME/.bashrc
 RUN pip3 install ipython
-RUN pip2 install ipython
+RUN pip2 install ipython gdbgui
 
 COPY ros_entrypoint.sh /
 RUN chmod +x /ros_entrypoint.sh
