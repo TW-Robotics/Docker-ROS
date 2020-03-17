@@ -37,25 +37,22 @@ Make sure that you allow VcXsrv access to public and private networks
 
 ## Windows
 
-1. Now you can either build the container from source or pull it from the docker hub
+1. Start VcXsrv (XLaunch) with following configuration:   
+![VcXsrv Configuration](./XmingConfig.PNG)
+2. Now you can either build the container from source or pull it from the docker hub
     1. Build:
         1. Navigate to the downloaded folder using file explorer
         2. Double klick on [build_docker_container.bat](./build_docker_container.bat)
     2. Pull:
-    Open Powershell and execute:
-    ```
-    docker pull fhtw/ros-melodic
-    ```
-2. Start VcXsrv (XLaunch) with following configuration:   
-![VcXsrv Configuration](./XmingConfig.PNG)
-
-
-2. To start the docker container double klick on either [run_docker_from_hub.bat](./run_docker_from_hub.bat) or [run_docker_from_local_build.bat](./run_docker_from_local_build.bat)
+        ```
+        docker pull georgno/fhtw-ros:latest
+        ```
+3. To start the docker container double klick on either [run_docker_from_hub.bat](./run_docker_from_hub.bat) or [run_docker_from_local_build.bat](./run_docker_from_local_build.bat)
 On the first start docker will ask for permissions to mount catkin_ws/src folder (for more see below).
 
 ## Development inside the Docker Container
 
-To make it easier to develope within the docker container, create a folder "./src/" (which must be located directly in the folder from which you run the run_docker_from_hub/local). This folder is mounted into the docker container to "/home/fhtw_user/catkin_ws/src/fhtw". This allows you to save your projects. 
+To make it easier to develope within the docker container, create a folder "./src/" (which must be located directly in the folder from which you run the run_docker_from_hub/local). This folder is mounted into the docker container to "/home/fhtw_user/catkin_ws/src/fhtw". This allows you to save your projects.   
 
 If you want to work with a IDE we recommand to use Visual Studio Code and the following plugins:
 
