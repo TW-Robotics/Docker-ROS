@@ -23,7 +23,7 @@ Make sure that you allow VcXsrv access to public and private networks
     ```
     2. Use the image on the docker hub:
     ```
-    docker pull rotrebski/uastw-ie-ros-lv
+    docker pull georgno/fhtw-ros:latest
     ```
 2. To start the docker container execute the following commands:
    1. With local build:
@@ -55,7 +55,12 @@ On the first start docker will ask for permissions to mount catkin_ws/src folder
 
 ## Development inside the Docker Container
 
-To make it easier to develope within the docker container, the folder "catkin_ws/src/" (which is located directly on your computer) is mounted into the docker container under "/home/fhtw_user/catkin_ws/src". This allows you to save your projects. Please use a USB stick or the volume of your fhtw users.
+To make it easier to develope within the docker container, create a folder "./src/" (which must be located directly in the folder from which you run the run_docker_from_hub/local). This folder is mounted into the docker container to "/home/fhtw_user/catkin_ws/src/fhtw". This allows you to save your projects. 
 
-If you want to work with a IDE we recommand to use Visual Studio Code and the Remote Development (ms-vscode-remote.vscode-remote-extensionpack) Plugin.
-Further to work with ROS we recommend the ROS (ms-iot.vscode-ros) Plugin.
+If you want to work with a IDE we recommand to use Visual Studio Code and the following plugins:
+
+- Remote Development (ms-vscode-remote.vscode-remote-extensionpack) 
+- ROs (ms-iot.vscode-ros)
+- C++ Intellisense (austin.code-gnu-global)
+
+Further to work with multiple terminals inside docker we recommend using [tmux](https://thoughtbot.com/blog/a-tmux-crash-course)
