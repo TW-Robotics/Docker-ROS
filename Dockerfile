@@ -50,7 +50,7 @@ RUN pip3 install ipython
 RUN pip2 install ipython gdbgui
 
 COPY ./docker_install /docker_install
-RUN bash /docker_install/isntall_vim.sh
+RUN bash /docker_install/install_vim.sh
 RUN rm -rf /docker_install
 
 COPY ros_entrypoint.sh /
