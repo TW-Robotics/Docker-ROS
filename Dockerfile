@@ -38,6 +38,8 @@ RUN bash /home/$USERNAME/fhtw_software/scripts/bash/install.sh -o &&\
     rm -rf /home/$USERNAME/poco &&\
     rm -rf /home/$USERNAME/pistache &&\
     rm -rf /home/$USERNAME/opencv_*
+RUN rm -rf  /home/$USERNAME/fhtw_software
+
 RUN mkdir -p /home/$USERNAME/catkin_ws/src &&\
     cd /home/$USERNAME/catkin_ws/src &&\
     /ros_entrypoint.sh catkin_init_workspace &&\
@@ -49,9 +51,9 @@ RUN echo "source /home/$USERNAME/catkin_ws/devel/setup.bash" >> /home/$USERNAME/
 RUN pip3 install ipython
 RUN pip2 install ipython gdbgui
 
-COPY ./docker_install /docker_install
-RUN bash /docker_install/install_vim.sh
-RUN rm -rf /docker_install
+COPY ./docker_install /home/$USERNAME/docker_install
+RUN bash /home/$USERNAME/docker_install/install_vim.sh
+RUN rm -rf /home/$USERNAME/docker_install
 
 COPY ros_entrypoint.sh /
 RUN chmod +x /ros_entrypoint.sh
