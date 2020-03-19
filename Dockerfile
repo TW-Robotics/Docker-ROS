@@ -1,5 +1,5 @@
 FROM ros:melodic
-LABEL maintainer = "Richard Otrebski FHTW"
+LABEL maintainer = "Georg Novotny FHTW"
 RUN apt update && \
     apt install -y\
     less htop nmon tmux gdb gosu\
