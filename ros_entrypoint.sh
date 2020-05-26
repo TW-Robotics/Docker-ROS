@@ -26,7 +26,9 @@ if [ -z "$1" ]; then
 fi
 
 source /opt/ros/melodic/setup.bash
-source /home/fhtw_user/catkin_ws/devel/setup.bash
+if [ -f /home/fhtw_user/catkin_ws/devel/setup.bash ]; then
+    source /home/fhtw_user/catkin_ws/devel/setup.bash
+fi
 
 # Run the provided command using user 'fhtw_user'
 exec gosu fhtw_user "$@"
