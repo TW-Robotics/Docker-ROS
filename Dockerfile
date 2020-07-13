@@ -55,8 +55,10 @@ COPY ./docker_install /home/$USERNAME/docker_install
 RUN bash /home/$USERNAME/docker_install/install_vim.sh "${USERNAME}"
 RUN rm -rf /home/$USERNAME/docker_install
 
-RUN echo "Test"
-
+RUN sudo apt update && \
+    sudo apt install ros-melodic-urdf* && \
+    rm -rf /var/lib/apt/lists/
+    
 COPY ros_entrypoint.sh /
 RUN chmod +x /ros_entrypoint.sh
 ENTRYPOINT [ "/ros_entrypoint.sh" ]
