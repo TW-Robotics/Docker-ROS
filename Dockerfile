@@ -2,14 +2,14 @@ FROM ros:melodic
 LABEL maintainer = "Georg Novotny FHTW"
 RUN apt update && \
     apt install -y\
-    less htop nmon tmux gdb gosu\
-    sudo libgl1-mesa-glx libgl1-mesa-dri git xterm curl\
+    less htop nmon tmux gdb gosu python-pip python3-pip\
+    sudo vim libgl1-mesa-glx libgl1-mesa-dri git xterm curl\
     iproute2 iputils-ping synaptic bash-completion libboost-all-dev clang-format bc\
     imagemagick psmisc protobuf-compiler ros-melodic-dwa-local-planner\
     ros-melodic-costmap-2d ros-melodic-hector-gazebo* ros-melodic-global-planner\
     ros-melodic-turtlebot3* ros-melodic-navigation ros-melodic-pid\
     ros-melodic-rosdoc-lite ros-melodic-gmapping\
-    ros-melodic-rqt* \
+    ros-melodic-rqt* ros-melodic-urdf* \
     && rm -rf /var/lib/apt/lists/
 
 ENV USERNAME fhtw_user
@@ -32,14 +32,6 @@ RUN echo 'echo "ROS_HOSTNAME=>$ROS_HOSTNAME<"' >> /home/$USERNAME/.bashrc
 RUN echo 'echo "ROS_IP=>$ROS_IP<"' >> /home/$USERNAME/.bashrc
 
 
-RUN git clone https://gitlab-mr.technikum-wien.at/otrebski/software.git /home/$USERNAME/fhtw_software
-RUN bash /home/$USERNAME/fhtw_software/scripts/bash/install.sh -o &&\
-    rm -rf /var/lib/apt/lists/ &&\
-    rm -rf /home/$USERNAME/poco &&\
-    rm -rf /home/$USERNAME/pistache &&\
-    rm -rf /home/$USERNAME/opencv_*
-RUN rm -rf  /home/$USERNAME/fhtw_software
-
 RUN mkdir -p /home/$USERNAME/catkin_ws/src &&\
     cd /home/$USERNAME/catkin_ws/src &&\
     /ros_entrypoint.sh catkin_init_workspace &&\
@@ -48,17 +40,14 @@ RUN mkdir -p /home/$USERNAME/catkin_ws/src &&\
 RUN chown $USERNAME:$USERNAME --recursive /home/$USERNAME/catkin_ws
 RUN echo "source /opt/ros/melodic/setup.bash" >> /home/$USERNAME/.bashrc
 RUN echo "source /home/$USERNAME/catkin_ws/devel/setup.bash" >> /home/$USERNAME/.bashrc
-RUN pip3 install ipython
-RUN pip2 install ipython gdbgui
+RUN pip3 install gdbgui
 
 COPY ./docker_install /home/$USERNAME/docker_install
 RUN bash /home/$USERNAME/docker_install/install_vim.sh "${USERNAME}"
 RUN rm -rf /home/$USERNAME/docker_install
 
-RUN sudo apt update && \
-    sudo apt install ros-melodic-urdf* && \
-    rm -rf /var/lib/apt/lists/
-    
+RUN echo 'if [ -z "$TMUX" ]; then     tmux attach -t default || tmux new -s default; fi' >> /home/fhtw_user/.bashrc
+   
 COPY ros_entrypoint.sh /
 RUN chmod +x /ros_entrypoint.sh
 ENTRYPOINT [ "/ros_entrypoint.sh" ]
