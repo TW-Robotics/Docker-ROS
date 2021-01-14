@@ -16,10 +16,10 @@ Make sure that you allow VcXsrv access to public and private networks
 
 ## Linux
 
-1. Now you can either build the container from source or pull it from the docker hub
+1. Now you can either build the container from source or pull it from the docker hub (recommended).
     1. Build locally:
     ```
-    docker build -t "fhtw/ros-melodic" --rm .
+    docker build -t "fhtw/ros:latest" --rm .
     ```
     2. Use the image on the docker hub:
     ```
@@ -52,12 +52,19 @@ On the first start docker will ask for permissions to mount catkin_ws/src folder
 
 ## Development inside the Docker Container
 
-To make it easier to develope within the docker container, create a folder "./src/" (which must be located directly in the folder from which you run the run_docker_from_hub/local). This folder is mounted into the docker container to "/home/fhtw_user/catkin_ws/src/fhtw". This allows you to save your projects.   
+To make it easier to develope within the docker container, create a folder "./src/" (which must be located directly in the folder from which you run the run_docker_from_hub/local). This folder is mounted into the docker container to "/home/fhtw_user/catkin_ws/src/fhtw". This allows you to save your projects on your host computer and execute them in the docker container.   
 
 If you want to work with a IDE we recommand to use Visual Studio Code and the following plugins:
 
 - Remote Development (ms-vscode-remote.vscode-remote-extensionpack) 
-- ROs (ms-iot.vscode-ros)
+- ROS (ms-iot.vscode-ros)
 - C++ Intellisense (austin.code-gnu-global)
 
 Further to work with multiple terminals inside docker we recommend using [tmux](https://thoughtbot.com/blog/a-tmux-crash-course)
+
+
+## Commit changes to the docker container
+To store changes (such as newly installed software) you need to commit these changes from your command line (we recommand powershell for windows and the normal terminal for linux).
+```
+# docker commit [CONTAINER_ID] fhtw_ros_local:latest -m "Commit message"
+```
