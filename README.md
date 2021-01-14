@@ -5,7 +5,7 @@ Note that it is not possible to communicate with other hosts (e.g. Turtlebot) vi
 
 ## Prequisites
 
-1. Install docker (here are the instructions: [link](https://docs.docker.com/install/linux/docker-ce/ubuntu/) )
+1. Install docker (here are the instructions: [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/) [Windows](https://docs.docker.com/docker-for-windows/install/) )
 2. Copy the downloaded files to a destination of your choice. e.g. ~/Documents/Docker/FHTW/
 
 ### Windows only
@@ -60,7 +60,7 @@ If you want to work with a IDE we recommand to use Visual Studio Code and the fo
 - ROS (ms-iot.vscode-ros)
 - C++ Intellisense (austin.code-gnu-global)
 
-Further to work with multiple terminals inside docker we recommend using [tmux](https://thoughtbot.com/blog/a-tmux-crash-course)
+Further to work with multiple terminals inside docker we recommend using [tmux](https://thoughtbot.com/blog/a-tmux-crash-course) which is set as the default shell.
 
 
 ## Commit changes to the docker container
