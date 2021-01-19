@@ -19,5 +19,6 @@ docker run \
     --env="DISPLAY=${DISPLAY}" \
     --privileged -v /dev/bus/usb:/dev/bus/usb \
     --net=host \
-    --name "fhtw_ros"
-    fhtw/ros:latest bash
+    --name "fhtw_ros" \
+    --gpus all \
+    fhtw/ros:latest-gpu bash

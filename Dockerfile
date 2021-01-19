@@ -88,4 +88,11 @@ RUN echo 'if [ -z "$TMUX" ]; then tmux attach -t default || tmux new -s default;
    
 COPY ros_entrypoint.sh /
 RUN chmod +x /ros_entrypoint.sh
+
+# nvidia-container-runtime
+ENV NVIDA_VISIBLE_DEVICES \
+    ${NVIDIA_VISIBLE_DEVICES:-all}
+ENV NVIDIA_DRIVER_CAPABILITIES \
+    ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
+
 ENTRYPOINT [ "/ros_entrypoint.sh" ]
