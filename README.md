@@ -1,17 +1,13 @@
 # Instructions for Docker 
 
-The following readme gives a short introduction on how to use the docker container on Linux and on Windows.   
-Note that it is not possible to communicate with other hosts (e.g. Turtlebot) via wifi nor lan if you use docker on Windows.
+The following readme gives a short introduction on how to use the docker container on Linux with gpu support.   
 
 ## Prequisites
 
-1. Install docker (here are the instructions: [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/) [Windows](https://docs.docker.com/docker-for-windows/install/) )
-2. Copy the downloaded files to a destination of your choice. e.g. ~/Documents/Docker/FHTW/
-
-### Windows only
-
-3. Install VcXsrv as X11-Server: [link](https://sourceforge.net/projects/vcxsrv/files/latest/download)   
-Make sure that you allow VcXsrv access to public and private networks
+1. Install docker (here are the instructions: [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/) )
+2. Install CUDA on your PC  (here are the instructions: [link](https://developer.nvidia.com/cuda-downloads) )
+3. Install nvidia-docker2 on your PC (here are the instructions: [link](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker) )
+4. Copy the downloaded files to a destination of your choice. e.g. ~/Documents/Docker/FHTW/
 
 
 ## Linux
@@ -19,11 +15,11 @@ Make sure that you allow VcXsrv access to public and private networks
 1. Now you can either build the container from source or pull it from the docker hub (recommended).
     1. Build locally:
     ```
-    docker build -t "fhtw/ros:latest" --rm .
+    docker build -t "fhtw/ros:latest-gpu" --rm .
     ```
     2. Use the image on the docker hub:
     ```
-    docker pull georgno/fhtw-ros:latest
+    docker pull georgno/fhtw-ros:latest-gpu
     ```
 2. To start the docker container execute the following commands:
    1. With local build:
@@ -35,20 +31,6 @@ Make sure that you allow VcXsrv access to public and private networks
    bash run_docker_from_hub.sh
    ```
 
-## Windows
-
-1. Start VcXsrv (XLaunch) with following configuration:   
-![VcXsrv Configuration](./XmingConfig.PNG)
-2. Now you can either build the container from source or pull it from the docker hub
-    1. Build:
-        1. Navigate to the downloaded folder using file explorer
-        2. Double klick on [build_docker_container.bat](./build_docker_container.bat)
-    2. Pull:
-        ```
-        docker pull georgno/fhtw-ros:latest
-        ```
-3. To start the docker container double klick on either [run_docker_from_hub.bat](./run_docker_from_hub.bat) or [run_docker_from_local_build.bat](./run_docker_from_local_build.bat)
-On the first start docker will ask for permissions to mount catkin_ws/src folder (for more see below).
 
 ## Development inside the Docker Container
 
