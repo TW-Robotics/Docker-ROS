@@ -52,7 +52,7 @@ On the first start docker will ask for permissions to mount catkin_ws/src folder
 
 ## Development inside the Docker Container
 
-To make it easier to develope within the docker container, create a folder "./src/" (which must be located directly in the folder from which you run the run_docker_from_hub/local). This folder is mounted into the docker container to "/home/fhtw_user/catkin_ws/src/fhtw". This allows you to save your projects.   
+To make it easier to develope within the docker container, create a folder "./catkin_ws/src/" (which must be located directly in the folder from which you run the run_docker_from_hub/local). This folder is mounted into the docker container to "/home/fhtw_user/catkin_ws/src/fhtw". This allows you to save your projects.   
 
 If you want to work with a IDE we recommand to use Visual Studio Code and the following plugins:
 
