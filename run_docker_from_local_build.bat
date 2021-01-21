@@ -6,7 +6,7 @@ for /f "delims=[] tokens=2" %%a in ('ping -4 -n 1 %ComputerName% ^| findstr [') 
 echo +Network IP: %NetworkIP%                                                 +
 set DISPLAY=%NetworkIP%:0.0
 echo +DISPLAY=%DISPLAY%                                                 +
-set pfad=%CD%\src\
+set pfad=%CD%\catkin_ws\src\
 echo +Path to catkin_ws=%pfad%
 echo ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
