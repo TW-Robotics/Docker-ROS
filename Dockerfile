@@ -3,7 +3,7 @@ LABEL maintainer = "Georg Novotny FHTW"
 
 RUN apt update && \
     apt-get install -y bash-completion\
-    less htop tmux gosu python3-pip git\
+    less htop tmux gosu python3-pip git vim\
     ros-noetic-amcl ros-noetic-angles ros-noetic-base-local-planner ros-noetic-clear-costmap-recovery \
     ros-noetic-costmap-2d ros-noetic-diagnostic-updater ros-noetic-hls-lfcd-lds-driver ros-noetic-interactive-markers \
     ros-noetic-joint-state-publisher ros-noetic-kdl-parser ros-noetic-laser-geometry ros-noetic-map-msgs \
@@ -13,7 +13,7 @@ RUN apt update && \
     ros-noetic-tf2-ros ros-noetic-turtlebot3 ros-noetic-turtlebot3-bringup ros-noetic-turtlebot3-description \
     ros-noetic-turtlebot3-example ros-noetic-turtlebot3-navigation ros-noetic-turtlebot3-slam \
     ros-noetic-turtlebot3-teleop ros-noetic-urdf ros-noetic-voxel-grid ros-noetic-xacro \
-    ros-noetic-rosdoc-lite ros-noetic-gmapping ros-noetic-rqt* ros-noetic-gazebo-ros --no-install-recommends\
+    ros-noetic-rosdoc-lite ros-noetic-gmapping ros-noetic-rqt* ros-noetic-gazebo-ros ros-noetic-turtlebot3-simulations --no-install-recommends\
     && rm -rf /var/lib/apt/lists/
 
 ENV USERNAME fhtw_user
@@ -37,7 +37,7 @@ RUN echo 'echo "ROS_IP=>$ROS_IP<"' >> /home/$USERNAME/.bashrc
 
 
 RUN mkdir -p /home/$USERNAME/catkin_ws/src &&\
-    cd /home/$USERNAME/catkin_ws/src && git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations &&\
+    cd /home/$USERNAME/catkin_ws/src && \
     /ros_entrypoint.sh catkin_init_workspace &&\
     cd .. &&\
     /ros_entrypoint.sh catkin_make
