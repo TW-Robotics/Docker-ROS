@@ -19,7 +19,7 @@ The following readme gives a short introduction on how to use the docker contain
     ```
     2. Use the image on the docker hub:
     ```
-    docker pull georgno/fhtw-ros:latest-gpu
+    docker pull georgno/fhtw-ros:master-gpu
     ```
 2. To start the docker container execute the following commands:
    1. With local build:

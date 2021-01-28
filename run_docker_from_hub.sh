@@ -20,4 +20,4 @@ docker run \
     --privileged -v /dev/bus/usb:/dev/bus/usb \
     --net=host \
     --name "fhtw_ros" \
-    georgno/fhtw-ros:latest-gpu bash
+    georgno/fhtw-ros:master-gpu bash
