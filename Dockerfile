@@ -13,7 +13,7 @@ RUN apt update && \
     ros-noetic-tf2-ros ros-noetic-turtlebot3 ros-noetic-turtlebot3-bringup ros-noetic-turtlebot3-description \
     ros-noetic-turtlebot3-example ros-noetic-turtlebot3-navigation ros-noetic-turtlebot3-slam \
     ros-noetic-turtlebot3-teleop ros-noetic-urdf ros-noetic-voxel-grid ros-noetic-xacro \
-    ros-noetic-rosdoc-lite ros-noetic-gmapping ros-noetic-rqt* ros-noetic-gazebo-ros ros-turtlebot3-simulations --no-install-recommends\
+    ros-noetic-rosdoc-lite ros-noetic-gmapping ros-noetic-rqt* ros-noetic-gazebo-ros ros-noetic-turtlebot3-simulations --no-install-recommends\
     && rm -rf /var/lib/apt/lists/
 
 ENV USERNAME fhtw_user
