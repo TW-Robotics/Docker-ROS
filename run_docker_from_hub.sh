@@ -21,4 +21,4 @@ docker run \
     --net=host \
     --gpus all \
     --name "fhtw_ros" \
-    georgno/fhtw-ros:latest bash
+    georgno/melodic-gpu:latest bash
