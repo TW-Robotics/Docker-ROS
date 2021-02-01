@@ -15,11 +15,11 @@ The following readme gives a short introduction on how to use the docker contain
 1. Now you can either build the container from source or pull it from the docker hub (recommended).
     1. Build locally:
     ```
-    docker build -t "fhtw/ros:latest-gpu" --rm .
+    docker build -t "fhtw/ros:latest-gpu-ml" --rm .
     ```
     2. Use the image on the docker hub:
     ```
-    docker pull georgno/fhtw-ros:master-gpu
+    docker pull georgno/fhtw-ros:master-gpu-ml
     ```
 2. To start the docker container execute the following commands:
    1. With local build:
