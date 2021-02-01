@@ -19,11 +19,11 @@ Make sure that you allow VcXsrv access to public and private networks
 1. Now you can either build the container from source or pull it from the docker hub
     1. Build locally:
     ```
-    docker build -t "fhtw/ros-melodic-gpu" --rm .
+    docker build -t "fhtw/ros:melodic-gpu-ml" --rm .
     ```
     2. Use the image on the docker hub:
     ```
-    docker pull georgno/fhtw-ros:latest
+    docker pull georgno/fhtw-ros:melodic-gpu-ml
     ```
 2. To start the docker container execute the following commands:
    1. With local build:

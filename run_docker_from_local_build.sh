@@ -21,4 +21,4 @@ docker run \
     --net=host \
     --gpus all \
     --name "fhtw_ros" \
-    fhtw/ros-melodic-gpu:latest bash
+    fhtw/ros:melodic-gpu:latest bash

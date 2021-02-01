@@ -94,6 +94,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-mark hold libnccl2 \
     && rm -rf /var/lib/apt/lists/*
 
+# CUDNN #
+ENV CUDNN_VERSION 8.0.5.39
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libcudnn8=$CUDNN_VERSION-1+cuda10.2 \
+    && apt-mark hold libcudnn8 && \
+    rm -rf /var/lib/apt/lists/*
 
 #------------#
 # CUDA devel #
@@ -111,5 +117,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 ENV LIBRARY_PATH /usr/local/cuda/lib64/stubs
+
+# CUDNN #
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libcudnn8=$CUDNN_VERSION-1+cuda10.2 \
+    libcudnn8-dev=$CUDNN_VERSION-1+cuda10.2 \
+    && apt-mark hold libcudnn8 && \
+    rm -rf /var/lib/apt/lists/*
+
 
 ENTRYPOINT [ "/ros_entrypoint.sh" ]
