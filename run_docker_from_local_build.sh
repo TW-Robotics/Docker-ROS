@@ -21,4 +21,4 @@ docker run \
     --net=host \
     --name "fhtw_ros" \
     --gpus all \
-    fhtw/ros-noetic-gpu-ml bash
+    fhtw/ros-master-gpu-ml bash
