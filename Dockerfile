@@ -8,7 +8,7 @@ RUN apt update && \
     imagemagick psmisc protobuf-compiler ros-melodic-dwa-local-planner\
     ros-melodic-costmap-2d ros-melodic-hector-gazebo* ros-melodic-global-planner\
     ros-melodic-turtlebot3* ros-melodic-navigation ros-melodic-pid\
-    ros-melodic-rosdoc-lite ros-melodic-gmapping\
+    ros-melodic-rosdoc-lite ros-melodic-gmapping \
     ros-melodic-rqt* ros-melodic-urdf* \
     && rm -rf /var/lib/apt/lists/
 
@@ -35,6 +35,8 @@ RUN echo 'echo "ROS_IP=>$ROS_IP<"' >> /home/$USERNAME/.bashrc
 RUN mkdir -p /home/$USERNAME/catkin_ws/src &&\
     cd /home/$USERNAME/catkin_ws/src &&\
     /ros_entrypoint.sh catkin_init_workspace &&\
+    git clone https://bitbucket.org/theconstructcore/openai_ros/src/kinetic-devel/ openai-ros && \
+    git clone https://bitbucket.org/theconstructcore/openai_examples_projects.git && \
     cd .. &&\
     /ros_entrypoint.sh catkin_make
 RUN chown $USERNAME:$USERNAME --recursive /home/$USERNAME/catkin_ws
@@ -62,14 +64,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get purge --autoremove -y curl \
     && rm -rf /var/lib/apt/lists/*
 
-ENV CUDA_VERSION 10.2.89
-ENV CUDA_PKG_VERSION 10-2=$CUDA_VERSION-1
+ENV CUDA_VERSION 10.0.130
+ENV CUDA_PKG_VERSION 10-0=$CUDA_VERSION-1
 
 # For libraries in the cuda-compat-* package: https://docs.nvidia.com/cuda/eula/index.html#attachment-a
 RUN apt-get update && apt-get install -y --no-install-recommends \
     cuda-cudart-$CUDA_PKG_VERSION \
-    cuda-compat-10-2 \
-    && ln -s cuda-10.2 /usr/local/cuda && \
+    cuda-compat-10-0 \
+    && ln -s cuda-10.0 /usr/local/cuda && \
     rm -rf /var/lib/apt/lists/*
 
 ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
@@ -77,29 +79,34 @@ ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64
 
 # nvidia-container-runtime
 ENV NVIDIA_VISIBLE_DEVICES all
-ENV NVIDIA_DRIVER_CAPABILITIES all
-ENV NVIDIA_REQUIRE_CUDA "cuda>=10.2 brand=tesla,driver>=396,driver<397 brand=tesla,driver>=410,driver<411 brand=tesla,driver>=418,driver<419 brand=tesla,driver>=440,driver<441"
+ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+ENV NVIDIA_REQUIRE_CUDA "cuda>=10.0 brand=tesla,driver>=384,driver<385 brand=tesla,driver>=410,driver<411"
 
 #--------------#
 # CUDA runtime #
 #--------------#
-ENV NCCL_VERSION 2.8.3
+ENV NCCL_VERSION 2.6.4
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     cuda-libraries-$CUDA_PKG_VERSION \
     cuda-npp-$CUDA_PKG_VERSION \
     cuda-nvtx-$CUDA_PKG_VERSION \
-    libcublas10=10.2.2.89-1 \
-    libnccl2=$NCCL_VERSION-1+cuda10.2 \
+    cuda-cublas-10-0=10.0.130-1 \
+    libnccl2=$NCCL_VERSION-1+cuda10.0 \
     && apt-mark hold libnccl2 \
     && rm -rf /var/lib/apt/lists/*
 
+# apt from auto upgrading the cublas package. See https://gitlab.com/nvidia/container-images/cuda/-/issues/88
+RUN apt-mark hold cuda-cublas-10-0
+
+
 # CUDNN #
-ENV CUDNN_VERSION 8.0.5.39
+ENV CUDNN_VERSION 7.6.5.32
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libcudnn8=$CUDNN_VERSION-1+cuda10.2 \
-    && apt-mark hold libcudnn8 && \
+    libcudnn7=$CUDNN_VERSION-1+cuda10.0 \
+    && apt-mark hold libcudnn7 && \
     rm -rf /var/lib/apt/lists/*
+
 
 #------------#
 # CUDA devel #
@@ -111,19 +118,29 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     cuda-npp-dev-$CUDA_PKG_VERSION \
     cuda-libraries-dev-$CUDA_PKG_VERSION \
     cuda-minimal-build-$CUDA_PKG_VERSION \
-    libcublas-dev=10.2.2.89-1 \
-    libnccl-dev=2.8.3-1+cuda10.2 \
+    cuda-cublas-dev-10-0=10.0.130-1 \
+    libnccl-dev=2.6.4-1+cuda10.0 \
     && apt-mark hold libnccl-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# apt from auto upgrading the cublas package. See https://gitlab.com/nvidia/container-images/cuda/-/issues/88
+RUN apt-mark hold cuda-cublas-dev-10-0
+
 ENV LIBRARY_PATH /usr/local/cuda/lib64/stubs
+
 
 # CUDNN #
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libcudnn8=$CUDNN_VERSION-1+cuda10.2 \
-    libcudnn8-dev=$CUDNN_VERSION-1+cuda10.2 \
-    && apt-mark hold libcudnn8 && \
+    libcudnn7=$CUDNN_VERSION-1+cuda10.0 \
+    libcudnn7-dev=$CUDNN_VERSION-1+cuda10.0 \
+    && apt-mark hold libcudnn7 && \
     rm -rf /var/lib/apt/lists/*
 
+
+RUN pip install tensorflow-gpu torch torchvision future 
+
+RUN pip3 install jupyter ipykernel
+
+RUN pip install ipykernel
 
 ENTRYPOINT [ "/ros_entrypoint.sh" ]
