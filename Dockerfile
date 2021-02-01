@@ -107,6 +107,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     cuda-cudart-11-2=11.2.72-1 \
     cuda-compat-11-2 \
     && ln -s cuda-11.2 /usr/local/cuda && \
+    rm -rf /var/lib/apt/lists/*RUN apt-get update && apt-get install -y --no-install-recommends \
+    gnupg2 curl ca-certificates && \
+    curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub | apt-key add - && \
+    echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64 /" > /etc/apt/sources.list.d/cuda.list && \
+    echo "deb https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu2004/x86_64 /" > /etc/apt/sources.list.d/nvidia-ml.list && \
+    apt-get purge --autoremove -y curl \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV CUDA_VERSION 11.0.3
+
+# For libraries in the cuda-compat-* package: https://docs.nvidia.com/cuda/eula/index.html#attachment-a
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    cuda-cudart-11-0=11.0.221-1 \
+    cuda-compat-11-0 \
+    && ln -s cuda-11.0 /usr/local/cuda && \
     rm -rf /var/lib/apt/lists/*
 
 
@@ -121,36 +136,62 @@ ENV NVIDIA_REQUIRE_CUDA "cuda>=11.2 brand=tesla,driver>=418,driver<419 brand=tes
 # CUDA runtime #
 #--------------#
 ENV NCCL_VERSION 2.8.3
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    cuda-libraries-11-2=11.2.0-1 \
-    libnpp-11-2=11.2.1.68-1 \
-    cuda-nvtx-11-2=11.2.67-1 \
-    libcublas-11-2=11.3.1.68-1 \
-    libnccl2=$NCCL_VERSION-1+cuda11.2 \
+    cuda-libraries-11-0=11.0.3-1 \
+    libnpp-11-0=11.1.0.245-1 \
+    cuda-nvtx-11-0=11.0.167-1 \
+    libcublas-11-0=11.2.0.252-1 \
+    libnccl2=$NCCL_VERSION-1+cuda11.0 \
     && rm -rf /var/lib/apt/lists/*
 
 # apt from auto upgrading the cublas package. See https://gitlab.com/nvidia/container-images/cuda/-/issues/88
-RUN apt-mark hold libcublas-11-2 libnccl2
+RUN apt-mark hold libcublas-11-0 libnccl2
+
+# CUDNN #
+ENV CUDNN_VERSION 8.0.5.39
+
+LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libcudnn8=$CUDNN_VERSION-1+cuda11.0 \
+    && apt-mark hold libcudnn8 && \
+    rm -rf /var/lib/apt/lists/*
+
 
 #------------#
 # CUDA devel #
 #------------#
+ENV NCCL_VERSION 2.8.3
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libtinfo5 libncursesw5 \
-    cuda-cudart-dev-11-2=11.2.72-1 \
-    cuda-command-line-tools-11-2=11.2.0-1 \
-    cuda-minimal-build-11-2=11.2.0-1 \
-    cuda-libraries-dev-11-2=11.2.0-1 \
-    cuda-nvml-dev-11-2=11.2.67-1 \
-    libnpp-dev-11-2=11.2.1.68-1 \
-    libnccl-dev=2.8.3-1+cuda11.2 \
-    libcublas-dev-11-2=11.3.1.68-1 \
-    libcusparse-11-2=11.3.1.68-1 \
-    libcusparse-dev-11-2=11.3.1.68-1 \
+    cuda-cudart-dev-11-0=11.0.221-1 \
+    cuda-command-line-tools-11-0=11.0.3-1 \
+    cuda-minimal-build-11-0=11.0.3-1 \
+    cuda-libraries-dev-11-0=11.0.3-1 \
+    cuda-nvml-dev-11-0=11.0.167-1 \
+    libnpp-dev-11-0=11.1.0.245-1 \
+    libnccl-dev=2.8.3-1+cuda11.0 \
+    libcublas-dev-11-0=11.2.0.252-1 \
+    libcusparse-11-0=11.1.1.245-1 \
+    libcusparse-dev-11-0=11.1.1.245-1 \
     && rm -rf /var/lib/apt/lists/*
 
 # apt from auto upgrading the cublas package. See https://gitlab.com/nvidia/container-images/cuda/-/issues/88
-RUN apt-mark hold libcublas-dev-11-2 libnccl-dev
+RUN apt-mark hold libcublas-dev-11-0 libnccl-dev
 ENV LIBRARY_PATH /usr/local/cuda/lib64/stubs
+
+# CUDNN #
+LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libcudnn8=$CUDNN_VERSION-1+cuda11.0 \
+    libcudnn8-dev=$CUDNN_VERSION-1+cuda11.0 \
+    && apt-mark hold libcudnn8 && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install tensorflow keras wandb torch
+
 
 ENTRYPOINT [ "/ros_entrypoint.sh" ]
