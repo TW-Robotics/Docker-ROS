@@ -39,6 +39,8 @@ RUN echo 'echo "ROS_IP=>$ROS_IP<"' >> /home/$USERNAME/.bashrc
 RUN mkdir -p /home/$USERNAME/catkin_ws/src &&\
     cd /home/$USERNAME/catkin_ws/src &&\
     /ros_entrypoint.sh catkin_init_workspace &&\
+    git clone https://bitbucket.org/theconstructcore/openai_ros/src/kinetic-devel/ openai-ros && \
+    git clone https://bitbucket.org/theconstructcore/openai_examples_projects.git && \
     cd .. &&\
     /ros_entrypoint.sh catkin_make
 RUN chown $USERNAME:$USERNAME --recursive /home/$USERNAME/catkin_ws
