@@ -135,7 +135,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 
-RUN pip install tensorflow-gpu torch torchvision future ipykernel
+RUN pip install tensorflow-gpu torch torchvision future ipykernel gym
 
 RUN pip3 install jupyter ipykernel
 
