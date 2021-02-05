@@ -19,5 +19,5 @@ docker run \
     --env="DISPLAY=${DISPLAY}" \
     --privileged -v /dev/bus/usb:/dev/bus/usb \
     --net=host \
-    --name "fhtw_ros"
+    --name "fhtw_ros" \
     georgno/fhtw-ros:latest bash
