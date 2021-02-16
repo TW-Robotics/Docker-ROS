@@ -9,7 +9,7 @@ RUN apt update && \
     ros-melodic-costmap-2d ros-melodic-hector-gazebo* ros-melodic-global-planner\
     ros-melodic-turtlebot3* ros-melodic-navigation ros-melodic-pid\
     ros-melodic-rosdoc-lite ros-melodic-gmapping\
-    ros-melodic-rqt* ros-melodic-urdf* \
+    ros-melodic-rqt* ros-melodic-urdf* ros-melodic-tf2* ros-melodic-roslint \
     && rm -rf /var/lib/apt/lists/
 
 ENV USERNAME fhtw_user
