@@ -9,7 +9,7 @@ RUN apt update && \
     ros-melodic-costmap-2d ros-melodic-hector-gazebo* ros-melodic-global-planner\
     ros-melodic-turtlebot3* ros-melodic-navigation ros-melodic-pid\
     ros-melodic-rosdoc-lite ros-melodic-gmapping \
-    ros-melodic-rqt* ros-melodic-urdf* \
+    ros-melodic-rqt* ros-melodic-urdf* --no-install-recommends \
     && rm -rf /var/lib/apt/lists/
 
 ENV USERNAME fhtw_user
@@ -42,7 +42,6 @@ RUN mkdir -p /home/$USERNAME/catkin_ws/src &&\
 RUN chown $USERNAME:$USERNAME --recursive /home/$USERNAME/catkin_ws
 RUN echo "source /opt/ros/melodic/setup.bash" >> /home/$USERNAME/.bashrc
 RUN echo "source /home/$USERNAME/catkin_ws/devel/setup.bash" >> /home/$USERNAME/.bashrc
-RUN pip3 install gdbgui
 
 COPY ./docker_install /home/$USERNAME/docker_install
 RUN bash /home/$USERNAME/docker_install/install_vim.sh "${USERNAME}"
@@ -61,8 +60,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub | apt-key add - && \
     echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64 /" > /etc/apt/sources.list.d/cuda.list && \
     echo "deb https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64 /" > /etc/apt/sources.list.d/nvidia-ml.list && \
-    apt-get purge --autoremove -y curl \
-    && rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*
 
 ENV CUDA_VERSION 10.2.89
 ENV CUDA_PKG_VERSION 10-2=$CUDA_VERSION-1
@@ -134,9 +132,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-mark hold libcudnn7 && \
     rm -rf /var/lib/apt/lists/*
 
-
-RUN pip install tensorflow-gpu torch torchvision future ipykernel gym
-
-RUN pip3 install jupyter ipykernel
+RUN sudo apt update && sudo apt install -y python-setuptools python3-setuptools && rm -rf /var/lib/apt/lists/
+RUN pip install wheel && pip3 install wheel
+RUN pip3 install gdbgui tensorflow tensorboard pytorch torchvision gym
 
 ENTRYPOINT [ "/ros_entrypoint.sh" ]
