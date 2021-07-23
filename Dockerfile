@@ -3,7 +3,7 @@ LABEL maintainer = "Georg Novotny FHTW"
 
 RUN apt update && \
     apt-get install -y bash-completion\
-    less htop tmux gosu python3-pip git vim\
+    less htop tmux xterm gosu python3-pip git vim python3-pip\
     ros-noetic-amcl ros-noetic-angles ros-noetic-base-local-planner ros-noetic-clear-costmap-recovery ros-noetic-global-planner* \
     ros-noetic-costmap-2d ros-noetic-diagnostic-updater ros-noetic-hls-lfcd-lds-driver ros-noetic-interactive-markers \
     ros-noetic-joint-state-publisher ros-noetic-kdl-parser ros-noetic-laser-geometry ros-noetic-map-msgs \
@@ -17,6 +17,7 @@ RUN apt update && \
     ros-noetic-pid ros-noetic-turtlebot3-simulations --no-install-recommends\
     && rm -rf /var/lib/apt/lists/
 
+RUN pip3 install jupyter 
 ENV USERNAME fhtw_user
 ARG USER_ID=1000
 ARG GROUP_ID=15214
