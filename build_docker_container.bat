@@ -1,7 +1,7 @@
 @echo off
 echo Building the Dockercontainer
 echo ...this will take a while...
-docker build -t "fhtw/ros:latest" --rm .
+docker build -t "georgno/fhtw-ros:melodic" --rm .
 IF %ERRORLEVEL% == 1 (
     echo Something went wrong
     echo Check above for error
