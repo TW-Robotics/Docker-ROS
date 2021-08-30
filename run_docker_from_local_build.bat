@@ -10,6 +10,6 @@ set pfad=%CD%\src\
 echo +Path to catkin_ws=%pfad%
 echo ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-docker run -it --network host --rm --mount type=bind,source="%pfad%\",target=/home/fhtw_user/catkin_ws/src/fhtw/ --name "fhtw_ros-melodic" --privileged -e DISPLAY=%DISPLAY%  "georgno/fhtw-ros:melodic" "bash"
+docker run -it --network bridge -p 8888:8888 --rm --mount type=bind,source="%pfad%\",target=/home/fhtw_user/catkin_ws/src/fhtw/ --name "fhtw_ros-melodic" --privileged -e DISPLAY=%DISPLAY%  "georgno/fhtw-ros:melodic" "bash"
 
 cmd /k
