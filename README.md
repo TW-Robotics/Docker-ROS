@@ -1,6 +1,6 @@
 # Content
 This repo contains a [Dockerfile](Dockerfile) and runfiles for gpu accelerated OpenGL rendering.   
-$\rightarrow$ Offloads OpenGL rendering to GPU 
+-> Offloads OpenGL rendering to GPU 
 
 ## Instructions for Docker 
 
