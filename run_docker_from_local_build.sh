@@ -20,5 +20,6 @@ docker run \
     --env="DISPLAY=${DISPLAY}" \
     --privileged -v /dev/bus/usb:/dev/bus/usb \
     --net=host \
+    --runtime nvidia \
     --gpus all \
     fhtw/ros-melodic-gpu:latest bash

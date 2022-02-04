@@ -1,8 +1,6 @@
 FROM georgno/fhtw-ros:melodic
 LABEL maintainer = "Georg Novotny FHTW"
 
-ENTRYPOINT [ "/ros_entrypoint.sh" ]
-
 ENV NVIDIA_VISIBLE_DEVICES \
     ${NVIDIA_VISIBLE_DEVICES:-all}
 ENV NVIDIA_DRIVER_CAPABILITIES \

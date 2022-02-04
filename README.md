@@ -1,15 +1,20 @@
-# Instructions for Docker 
+# Content
+This repo contains a [Dockerfile](Dockerfile) and runfiles for gpu accelerated OpenGL rendering.   
+$\rightarrow$ Offloads OpenGL rendering to GPU 
+
+## Instructions for Docker 
 
 The following readme gives a short introduction on how to use the gpu accelerated docker container on Linux.  
 Note this should also work with Windows 11 and WSL2 with build higher build 22000.* and an NVIDIA GPU [link](https://github.com/microsoft/wslg)
-## Prequisites
+### Prequisites
 
+0. Install the nvidia driver for your gpu: [link](https://www.nvidia.de/Download/index.aspx?lang=en)
 1. Install docker (here are the instructions: [link](https://docs.docker.com/install/) )
-2. Install nvidia-docker2 (here are the instructions: [link](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker) )
+2. Install nvidia-docker2 (here are the instructions: [link](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker) ) [not needed for Windows 11]
 3. Copy the downloaded files to a destination of your choice. e.g. ~/Documents/Docker/FHTW/
 
 
-## Linux
+### Linux
 
 1. Now you can either build the container from source or pull it from the docker hub
     1. Build locally:
