@@ -30,7 +30,7 @@ RUN echo "export ROS_HOSTNAME=\"\$(hostname -I | awk '{print \$1;}')\"" >> /home
 RUN echo "export ROS_IP=\"\$(hostname -I | awk '{print \$1;}')\"" >> /home/$USERNAME/.bashrc
 RUN echo 'echo "ROS_HOSTNAME=>$ROS_HOSTNAME<"' >> /home/$USERNAME/.bashrc
 RUN echo 'echo "ROS_IP=>$ROS_IP<"' >> /home/$USERNAME/.bashrc
-
+RUN su $USERNAME -c "rosdep update"
 
 RUN mkdir -p /home/$USERNAME/catkin_ws/src &&\
     cd /home/$USERNAME/catkin_ws/src &&\
