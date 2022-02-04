@@ -12,6 +12,7 @@ echo -e "\e[32mMounting fodler:
 
 docker run \
     -it --rm \
+    --name fhtw-ros \
     --volume=$XSOCK:$XSOCK:rw \
     --volume=$XAUTH:$XAUTH:rw \
     --volume=$HOST_DIR:$SHARED_DIR:rw \
@@ -20,5 +21,4 @@ docker run \
     --privileged -v /dev/bus/usb:/dev/bus/usb \
     --net=host \
     --gpus all \
-    --name "fhtw_ros" \
     fhtw/ros-melodic-gpu:latest bash
