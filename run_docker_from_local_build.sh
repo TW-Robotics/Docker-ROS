@@ -20,4 +20,4 @@ docker run \
     --privileged -v /dev/bus/usb:/dev/bus/usb \
     --net=host \
     --name "fhtw_ros" \
-    fhtw/ros:latest bash
+    fhtw/ros-noetic:latest bash

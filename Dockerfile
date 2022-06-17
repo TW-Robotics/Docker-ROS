@@ -16,7 +16,6 @@ RUN apt update && \
     ros-noetic-rosdoc-lite ros-noetic-gmapping ros-noetic-rqt* ros-noetic-gazebo-ros ros-noetic-gazebo-plugins* \
     ros-noetic-pid ros-noetic-turtlebot3-simulations --no-install-recommends\
     && rm -rf /var/lib/apt/lists/
-
 RUN pip3 install jupyter 
 ENV USERNAME fhtw_user
 ARG USER_ID=1000
@@ -30,7 +29,7 @@ RUN groupadd --gid $GROUP_ID $USERNAME && \
         usermod  --uid $USER_ID $USERNAME && \
         echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$USERNAME && \
         chmod 0440 /etc/sudoers.d/$USERNAME
-
+RUN su ${USERNAME} -c "rosdep update"
 RUN echo "export TURTLEBOT3_MODEL=burger" >> /home/$USERNAME/.bashrc
 RUN echo "export ROS_HOSTNAME=\"\$(hostname -I | awk '{print \$1;}')\"" >> /home/$USERNAME/.bashrc
 RUN echo "export ROS_IP=\"\$(hostname -I | awk '{print \$1;}')\"" >> /home/$USERNAME/.bashrc

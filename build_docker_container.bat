@@ -1,11 +1,11 @@
 @echo off
 echo Building the Dockercontainer
 echo ...this will take a while...
-docker build -t "fhtw/ros:latest" --rm .
+docker build -t "fhtw/ros-noetic:latest" --rm .
 IF %ERRORLEVEL% == 1 (
     echo Something went wrong
     echo Check above for error 
-    echo For detailed output run 'docker build  --progress=plain  -t "fhtw/ros:latest" --rm .' instead of 'docker build -t "fhtw/ros:latest" --rm .'
+    echo For detailed output run 'docker build  --progress=plain  -t "fhtw/ros-noetic:latest" --rm .' instead of 'docker build -t "fhtw/ros-noetic:latest" --rm .'
     pause
 ) ELSE (
     echo .

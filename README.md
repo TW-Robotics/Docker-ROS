@@ -19,9 +19,9 @@ Make sure that you allow VcXsrv access to public and private networks
 1. Now you can either build the container from source or pull it from the docker hub (recommended).
     1. Build locally:
     ```
-    docker build -t "fhtw/ros:latest" --rm .
+    docker build -t "fhtw/ros-noetic:latest" --rm .
     ```
-    2. Use the image on the docker hub:
+    1. Use the image on the docker hub:
     ```
     docker pull georgno/fhtw-ros:latest
     ```
@@ -30,7 +30,7 @@ Make sure that you allow VcXsrv access to public and private networks
    ```
    bash run_docker_from_local_build.sh
    ```
-   2. With hub:
+   1. With hub:
    ```
    bash run_docker_from_hub.sh
    ```
