@@ -19,6 +19,5 @@ docker run \
     --env="DISPLAY=${DISPLAY}" \
     --privileged -v /dev/bus/usb:/dev/bus/usb \
     --net=host \
-    --gpus 'all,"capabilities=compute,utility,display,graphics"' \
     --name "fhtw_ros" \
     georgno/fhtw-ros:latest bash
