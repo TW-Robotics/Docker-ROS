@@ -1,7 +1,7 @@
 FROM ros:noetic
 LABEL maintainer = "Georg Novotny FHTW"
 
-RUN apt update && \
+RUN apt-get update && \
     apt-get install -y bash-completion\
     less htop tmux xterm gosu python3-pip git vim python3-pip\
     ros-noetic-amcl ros-noetic-angles ros-noetic-base-local-planner ros-noetic-clear-costmap-recovery ros-noetic-global-planner* \
@@ -15,6 +15,7 @@ RUN apt update && \
     ros-noetic-turtlebot3-teleop ros-noetic-urdf ros-noetic-voxel-grid ros-noetic-xacro \
     ros-noetic-rosdoc-lite ros-noetic-gmapping ros-noetic-rqt* ros-noetic-gazebo-ros ros-noetic-gazebo-plugins* \
     ros-noetic-pid ros-noetic-turtlebot3-simulations --no-install-recommends\
+    ros-noetic-controller-manager ros-noetic-moveit ros-noetic-moveit-visual-tools ros-noetic-gazebo-ros-control ros-noetic-ros-controllers\
     && rm -rf /var/lib/apt/lists/
 RUN pip3 install jupyter 
 ENV USERNAME fhtw_user
@@ -54,7 +55,10 @@ RUN sudo apt update && sudo apt install -y checkinstall python-dev python-numpy 
     yasm libjpeg-dev libswscale-dev libdc1394-22-dev libxine2-dev  libv4l-dev python-dev python-numpy \
     libtbb-dev  qtbase5-dev  libgtk2.0-dev libfaac-dev libmp3lame-dev  libopencore-amrnb-dev \
     libopencore-amrwb-dev libtheora-dev  libvorbis-dev libxvidcore-dev x264 v4l-utils ffmpeg \
-    libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev
+    libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev \
+    libeigen3-dev libglfw3 libglfw3-dev
+    
+
 
 RUN cd /tmp && git clone https://github.com/opencv/opencv.git  && git clone https://github.com/opencv/opencv_contrib.git && \
     cd opencv && git fetch -a && git checkout 3.4.13 && mkdir build && cd ../opencv_contrib &&  git fetch -a && git checkout 3.4.13 && cd ../opencv/build && \
