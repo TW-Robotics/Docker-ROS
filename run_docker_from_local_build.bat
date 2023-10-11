@@ -10,6 +10,7 @@ set pfad=%CD%\catkin_ws\src\
 echo +Path to catkin_ws=%pfad%
 echo ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-docker run -it --network bridge --rm -p 5000:5000 --mount type=bind,source="%pfad%\",target=/home/fhtw_user/catkin_ws/src/fhtw/ --name "fhtw_ros" --privileged -e DISPLAY=%DISPLAY%  "fhtw/ros-noetic:latest" "bash"
+@REM docker run -it --network bridge --rm -p 5000:5000 --mount type=bind,source="%pfad%\",target=/home/fhtw_user/catkin_ws/src/ --name "fhtw_ros" --privileged -e DISPLAY=%DISPLAY%  "fhtw/ros-noetic:latest" "bash"
+docker run -it --network bridge --rm -p 5000:5000 --name "fhtw_ros" --privileged -e DISPLAY=%DISPLAY%  "fhtw/ros-noetic:latest" "bash"
 
 cmd /k
