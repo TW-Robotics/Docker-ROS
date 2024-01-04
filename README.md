@@ -81,7 +81,7 @@ There is one [powershell script](https://github.com/TW-Robotics/ros2_docker/blob
 Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
 ```
 1. Start VcXsrv (XLaunch) with following configuration:
-![VcXsrv Configuration](./imgs/XmingConfig.PNG)
+![VcXsrv Configuration](./imgs/XmingConfig.png)
 2. Double klick on [run_docker.ps1](./scripts/run_docker.ps1) 
 3. If you are asked to allow docker to mount a folder, click on "Share it" and then on "Apply & Restart". This will allow you to save your projects on your host computer and execute them in the docker container.
 

@@ -1,0 +1,8 @@
+#!/bin/sh
+unset DBUS_SESSION_BUS_ADDRESS
+
+if [ "$GRAPHICS_PLATFORM" = "nvidia" ]; then
+    /opt/VirtualGL/bin/vglrun mate-session
+else
+    mate-session
+fi

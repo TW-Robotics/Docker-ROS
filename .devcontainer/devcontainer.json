@@ -1,0 +1,51 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+    "image": "georgno/fhtw-ros:iron-desktop-ros_terminal-standard", // georgno/fhtw-ros:${ROS2-VERSION}-{BASE}-ros_{UI}-{GRAPHICS-PLATFORM}
+	// "dockerFile": "Dockerfile",  // optional: built the image from a custom dockerfile
+	// "build": {
+	// 	"target": "ros_vnc", // ["ros_terminal", "ros_vnc"]
+	// 	"args": {
+	// 		"GRAPHICS_PLATFORM": "standard", // ["standard", "nvidia", "amd", "intel", "wsl"]
+	// 		"ROS_DISTRO": "iron", // ["iron", "humble"]
+	// 		"INSTALL_PACKAGE": "desktop", // ["desktop", "base"]
+	// 		"NVIDIA_DRIVER_CAPABILITIES": "all", // ["all", "graphics", "utility", "compute"] or a combination of these
+	// 		"NVIDIA_VISIBLE_DEVICES": "all" // ["all", "none", "0,1,2,3", ...]
+	// 	}
+	// },
+	"remoteUser": "fhtw_user", // do not touch
+	"initializeCommand": "xhost +",  // (only needed on Linux)
+	"onCreateCommand": "bash /entrypoint.sh &",  // sources the ros2 workspaces (~/sim_ws, ~/ros2_ws)
+	"workspaceMount": "source=${localWorkspaceFolder}/ros2_ws/src,target=/home/fhtw_user/ros2_ws/src,type=bind,consistency=cached", // mount the ros2_src folder into the container
+	"workspaceFolder": "/home/fhtw_user/ros2_ws",	// Sets the default folder to open in the container
+	"runArgs": [
+		"--shm-size=512m", // this sets the shared memory size to 512MB (needed for rviz2)
+		"--privileged",
+		"--mount", "type=bind,source=${localWorkspaceFolder}/ros2_src/,target=/home/fhtw_user/ros2_ws/src", // mount the ros2_src folder into the container
+		"--volume", "/tmp/.X11-unix:/tmp/.X11-unix", // (only needed on Linux)
+		"--name", "fhtw_ros"
+	],
+	"containerEnv": {
+		"DISPLAY": "${localEnv:DISPLAY}", // sets the X11 display for linux or the windows equivalent
+		"LIBGL_ALWAYS_SOFTWARE": "1", // Needed for software rendering of opengl (only needed on Linux)
+		// "QT_X11_NO_MITSHM": "1" // this is needed for rviz2 to work on wayland
+	},
+	// Set *default* container specific settings.json values on container create.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+                "althack.ament-task-provider",
+                "DotJoshJohnson.xml",
+                "ms-azuretools.vscode-docker",
+                "ms-python.python",
+                "ms-vscode.cpptools",
+                "redhat.vscode-yaml",
+                "smilerobotics.urdf",
+                "twxs.cmake",
+                "yzhang.markdown-all-in-one",
+                "zachflower.uncrustify",
+                "ms-iot.vscode-ros",
+                "ms-vscode.cpptools-extension-pack"
+            ]
+		}
+	}
+}

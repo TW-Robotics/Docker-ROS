@@ -1,0 +1,10 @@
+setuptools==58.2.0  # Fix for: EasyInstallDeprecationWarning: easy_install command is deprecated.
+jupyterlab
+jupyter_core
+jupyter_client
+transforms3d
+matplotlib
+numpy
+scikit-image
+scikit-learn
+vcstool
