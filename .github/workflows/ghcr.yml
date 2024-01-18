@@ -36,7 +36,7 @@ jobs:
           while IFS= read -r line || [ -n "$line" ]; do
             if [ ! -z "$line" ]; then
               echo "Processing image tag: $line"
-              docker pull georgno/fhtw-ros:$line
+              docker pull georgno/fhtw-ros:$line -q
               docker tag georgno/fhtw-ros:$line ghcr.io/tw-robotics/docker-ros:$line
               docker push ghcr.io/tw-robotics/docker-ros:$line
             fi
