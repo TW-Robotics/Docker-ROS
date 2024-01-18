@@ -4,7 +4,7 @@ LABEL creator = "Georg Novotny FHTW"
 
 RUN apt update && \
     apt-get install -y bash-completion nano\
-    less htop tmux xterm gosu python3-pip git vim python3-pip\
+    less htop tmux xterm gosu python3-pip git vim python3-pip net-tools\
     ros-noetic-amcl ros-noetic-angles ros-noetic-base-local-planner ros-noetic-clear-costmap-recovery ros-noetic-global-planner* \
     ros-noetic-costmap-2d ros-noetic-diagnostic-updater ros-noetic-hls-lfcd-lds-driver ros-noetic-interactive-markers \
     ros-noetic-joint-state-publisher ros-noetic-kdl-parser ros-noetic-laser-geometry ros-noetic-map-msgs \
@@ -13,7 +13,10 @@ RUN apt update && \
     ros-noetic-tf ros-noetic-tf2 ros-noetic-tf2-geometry-msgs ros-noetic-tf2-kdl ros-noetic-tf2-msgs ros-noetic-tf2-py \
     ros-noetic-tf2-ros ros-noetic-urdf ros-noetic-voxel-grid ros-noetic-xacro \
     ros-noetic-rosdoc-lite ros-noetic-gmapping ros-noetic-rqt* ros-noetic-gazebo-ros ros-noetic-gazebo-plugins* \
-    ros-noetic-pid ros-noetic-urdf-tutorial ros-noetic-gazebo-ros-control ros-noetic-gazebo-ros-pkgs --no-install-recommends\
+    ros-noetic-pid ros-noetic-urdf-tutorial ros-noetic-gazebo-ros-control ros-noetic-gazebo-ros-pkgs \
+    ros-noetic-soem ros-noetic-socketcan-interface ros-noetic-velocity-controllers \
+    python3-vcstool ros-noetic-moveit ros-noetic-ros-control ros-noetic-ros-controllers \
+    ros-noetic-realsense2-camera ros-noetic-realsense2-description --no-install-recommends\
     && rm -rf /var/lib/apt/lists/
 RUN pip3 install jupyter 
 ENV USERNAME fhtw_user
@@ -88,12 +91,17 @@ RUN apt update && \
     apt-get install -y ros-noetic-universal-robots
 RUN echo "UR5 packages Installed"
 
-# Get Butler 2.0 package
+# Get Butler 2.0 package + Gripper
+# TODO: Gripper should be highly integrated
 RUN cd /home/$USERNAME/catkin_ws/src &&\
+    /ros_entrypoint.sh git clone https://github.com/TAMS-Group/robotiq.git &&\
     /ros_entrypoint.sh git clone https://github.com/TW-Robotics/butler_2.0.git &&\
     cd .. &&\
     /ros_entrypoint.sh catkin_make &&\
     chown $USERNAME:$USERNAME --recursive /home/$USERNAME/catkin_ws
+	
+RUN apt update && \
+    apt-get install -y ros-noetic-flir-camera-driver
 
 # # Installing MOBIPICK package from https://github.com/DFKI-NI/mir_robot
 # # This includes MIR100 and UR5 packages
