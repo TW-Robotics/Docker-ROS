@@ -7,7 +7,7 @@ fi
 
 # Set default values
 ROS_DISTRO="iron"  # iron, humble
-INSTALL_PACKAGE="desktop"  # desktop, base
+BASE_PACKAGE="desktop"  # desktop, base
 TARGET=ros_terminal # ros_terminal, ros_vnc
 
 if lspci | grep VGA | grep -i nvidia &> /dev/null; then
@@ -17,7 +17,7 @@ elif lspci | grep VGA | grep -i amd &> /dev/null; then
 else
     GRAPHICS_PLATFORM="standard" # standard, nvidia, amd
 fi
-# Get opts for ROS_DISTRO, INSTALL_PACKAGE, and TARGEt
+# Get opts for ROS_DISTRO, BASE_PACKAGE, and TARGEt
 while getopts d:p:t:g:h flag
 do
     case "${flag}" in
@@ -29,11 +29,11 @@ do
                 exit 1
             fi
             ;;
-        p) # CHECK IF INSTALL_PACKAGE IS VALID [desktop, base]
+        p) # CHECK IF BASE_PACKAGE IS VALID [desktop, base]
             if [ ${OPTARG} == "desktop" ] || [ ${OPTARG} == "base" ]; then
-                INSTALL_PACKAGE=${OPTARG}
+                BASE_PACKAGE=${OPTARG}
             else
-                echo "Invalid INSTALL_PACKAGE: ${OPTARG}"
+                echo "Invalid BASE_PACKAGE: ${OPTARG}"
                 exit 1
             fi
             ;;
@@ -63,13 +63,13 @@ done
 
 
 pushd ${BASE_DIR}/.devcontainer
-echo "Building ROS ${ROS_DISTRO} ${INSTALL_PACKAGE} image..."
+echo "Building ROS ${ROS_DISTRO} ${BASE_PACKAGE} image..."
 docker build \
     --build-arg ROS_DISTRO=${ROS_DISTRO} \
-    --build-arg INSTALL_PACKAGE=${INSTALL_PACKAGE} \
+    --build-arg BASE_PACKAGE=${BASE_PACKAGE} \
     --build-arg GRAPHICS_PLATFORM=${GRAPHICS_PLATFORM} \
     --target ${TARGET} \
-    -t fhtw:${ROS_DISTRO}-${INSTALL_PACKAGE}-${TARGET}-${GRAPHICS_PLATFORM} \
+    -t fhtw:${ROS_DISTRO}-${BASE_PACKAGE}-${TARGET}-${GRAPHICS_PLATFORM} \
     -f Dockerfile \
     .
 popd

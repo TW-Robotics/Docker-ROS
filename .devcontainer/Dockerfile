@@ -53,7 +53,7 @@ RUN apt-get update -q && \
 # Install ROS #
 FROM build_base as build_ros
 ARG ROS_DISTRO=iron
-ARG INSTALL_PACKAGE=desktop
+ARG BASE_PACKAGE=desktop
 
 ENV DEBIAN_FRONTEND="noninteractive"
 # setup environment
@@ -61,17 +61,17 @@ ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
 RUN echo "--------------------------------------------------------------------------------------------------------------"
-RUN echo "Installing ROS2 ${ROS_DISTRO}-${INSTALL_PACKAGE}"
+RUN echo "Installing ROS2 ${ROS_DISTRO}-${BASE_PACKAGE}"
 RUN echo "--------------------------------------------------------------------------------------------------------------"
 RUN apt-get update -q && \
     apt-get install -y curl gnupg2 lsb-release && \
     curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo jammy) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
     apt-get update -q && apt-get upgrade -y && \
-    apt-get install -y ros-dev-tools ros-${ROS_DISTRO}-${INSTALL_PACKAGE} \
+    apt-get install -y ros-dev-tools ros-${ROS_DISTRO}-${BASE_PACKAGE} ros-${ROS_DISTRO}-rqt* \
     python3-argcomplete \
     python3-colcon-common-extensions \
-    python3-rosdep python3-vcstool && \
+    python3-rosdep python3-vcstool --no-install-recommends && \
     rosdep init && \
     rm -rf /var/lib/apt/lists/*
 
@@ -85,7 +85,7 @@ ARG USER_ID=1000
 ARG GROUP_ID=1000
 
 ARG ROS_DISTRO=iron
-ARG INSTALL_PACKAGE=desktop
+ARG BASE_PACKAGE=desktop
 ENV ROS_WORKSPACE /home/${USERNAME}/ros2_ws
 ENV COLCON_HOME=/home/${USERNAME}/.colcon
 

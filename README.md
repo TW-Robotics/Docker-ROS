@@ -100,7 +100,7 @@ sudo systemctl start docker
 ##### Devcontainer
 Adapt the .devcontainer/devcontainer.json file to your needs. The following settings are available:
 * ROS_DISTRO: The ROS2 distribution that you want to use. (humble, iron)
-* INSTALL_PACKAGE: The ROS2 base we built upon (desktop, base)
+* BASE_PACKAGE: The ROS2 base we built upon (desktop, base)
 * TARGET: The UI that you want to use (terminal, vnc)
 * GRAPHICS_PLATFORM: The graphics platform that you want to use (standard, nvidia, amd)
   
@@ -142,5 +142,5 @@ The [scripts](./scripts/) folder contains script to build, run and attach to the
 - [attach_terminal.sh](./scripts/attach_terminal.sh)/[attach_terminal.ps1](./scripts/attach_terminal.ps1) - Attaches to a running docker container
   - Usage: `./attach_terminal.sh`   
   Note: This script will attach to the docker container and start a TMUX session to work with multiple terminals inside docker. We recommend familiarising with tmux using the following link: [https://thoughtbot.com/blog/a-tmux-crash-course](https://thoughtbot.com/blog/a-tmux-crash-course)
-- [build.sh](./scripts/build.sh)/[build.ps1](./scripts/build.ps1) - Builds the docker container from source and tags it like: `fhtw:${ROS_DISTRO}-${INSTALL_PACKAGE}-${TARGET}-${GRAPHICS_PLATFORM}`
+- [build.sh](./scripts/build.sh)/[build.ps1](./scripts/build.ps1) - Builds the docker container from source and tags it like: `fhtw:${ROS_DISTRO}-${BASE_PACKAGE}-${TARGET}-${GRAPHICS_PLATFORM}`
   - Usage: `./build.sh -d [iron, humble] -p [desktop, base] -t [ros_terminal, ros_vnc]  -g [standard, nvidia, amd]`

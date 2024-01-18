@@ -7,7 +7,7 @@ if ($LASTEXITCODE -ne 0) {
 
 # Set default values
 $ROS_DISTRO = "iron"  # iron, humble
-$INSTALL_PACKAGE = "desktop"  # desktop, base
+$BASE_PACKAGE = "desktop"  # desktop, base
 $TARGET = "ros_terminal"  # ros_terminal, ros_vnc
 
 # Check for NVIDIA or AMD graphics
@@ -34,12 +34,12 @@ foreach ($opt in $opts) {
                 exit 1
             }
         }
-        "p" {  # INSTALL_PACKAGE
+        "p" {  # BASE_PACKAGE
             if ($opt[1] -eq "desktop" -or $opt[1] -eq "base") {
-                $INSTALL_PACKAGE = $opt[1]
+                $BASE_PACKAGE = $opt[1]
             }
             else {
-                Write-Host "Invalid INSTALL_PACKAGE: $($opt[1])"
+                Write-Host "Invalid BASE_PACKAGE: $($opt[1])"
                 exit 1
             }
         }
@@ -70,12 +70,12 @@ foreach ($opt in $opts) {
 
 # Build the Docker image
 Push-Location -Path "$BASE_DIR/.devcontainer"
-Write-Host "Building ROS $ROS_DISTRO $INSTALL_PACKAGE image..."
+Write-Host "Building ROS $ROS_DISTRO $BASE_PACKAGE image..."
 docker build --build-arg ROS_DISTRO=$ROS_DISTRO `
-    --build-arg INSTALL_PACKAGE=$INSTALL_PACKAGE `
+    --build-arg BASE_PACKAGE=$BASE_PACKAGE `
     --build-arg GRAPHICS_PLATFORM=$GRAPHICS_PLATFORM `
     --target $TARGET `
-    -t "fhtw:$ROS_DISTRO-$INSTALL_PACKAGE-$TARGET-$GRAPHICS_PLATFORM" `
+    -t "fhtw:$ROS_DISTRO-$BASE_PACKAGE-$TARGET-$GRAPHICS_PLATFORM" `
     -f Dockerfile `
     .
 Pop-Location

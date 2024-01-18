@@ -7,7 +7,7 @@
 	// 	"args": {
 	// 		"GRAPHICS_PLATFORM": "standard", // ["standard", "nvidia", "amd", "intel", "wsl"]
 	// 		"ROS_DISTRO": "iron", // ["iron", "humble"]
-	// 		"INSTALL_PACKAGE": "desktop", // ["desktop", "base"]
+	// 		"BASE_PACKAGE": "desktop", // ["desktop", "base"]
 	// 		"NVIDIA_DRIVER_CAPABILITIES": "all", // ["all", "graphics", "utility", "compute"] or a combination of these
 	// 		"NVIDIA_VISIBLE_DEVICES": "all" // ["all", "none", "0,1,2,3", ...]
 	// 	}

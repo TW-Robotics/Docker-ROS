@@ -7,7 +7,7 @@ fi
 
 pushd ${BASE_DIR}/
 SHARED_DIR=/home/fhtw_user/ros2_ws/src
-HOST_DIR=$BASE_DIR/ros2_ws/src
+HOST_DIR=$BASE_DIR/ros2_src/src
 
 echo -e "\e[32mMounting fodler:
     $HOST_DIR    to
@@ -69,36 +69,32 @@ do
 done
 
 
-IMAGE="fhtw:${ROS_DISTRO}-${BASE}-ros_${UI}-${GRAPHICS_PLATFORM}"
+IMAGE="georgno/fhtw-ros:${ROS_DISTRO}-${BASE}-ros_${UI}-${GRAPHICS_PLATFORM}"
 
-RUN_ARGS='--rm --shm-size=512m \
-    --volume="$HOST_DIR":"$SHARED_DIR":rw \
+RUN_ARGS=(--rm --shm-size=512m \
+    --volume="$HOST_DIR:$SHARED_DIR:rw" \
     --privileged \
     --env="DISPLAY=${DISPLAY:=0.0}" \
     --env="QT_X11_NO_MITSHM=1" \
-    --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-    '
+    --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw")
 
 if [ ${UI} == "vnc" ]; then
-    RUN_ARGS="${RUN_ARGS} --publish 6080:80 \
-        --publish 6900:5901 \
-        "
+    RUN_ARGS+=(--publish 6080:80 \
+               --publish 6900:5901)
 fi
 
 if [ ${GRAPHICS_PLATFORM} == "nvidia" ]; then
-    RUN_ARGS="${RUN_ARGS} --gpus all"
+    RUN_ARGS+=(--gpus all)
 elif [ ${GRAPHICS_PLATFORM} == "amd" ]; then
-    RUN_ARGS="${RUN_ARGS} --device=/dev/dri:/dev/dri"
+    RUN_ARGS+=(--device=/dev/dri:/dev/dri)
 elif [ ${GRAPHICS_PLATFORM} == "standard" ]; then
-    RUN_ARGS="${RUN_ARGS} --device=/dev/dri:/dev/dri --env=LIBGL_ALWAYS_SOFTWARE=1"
+    RUN_ARGS+=(--device=/dev/dri:/dev/dri --env=LIBGL_ALWAYS_SOFTWARE=1)
 fi
 
-echo -e "${RUN_ARGS}"
-exit 0
-xhost +
-docker run \
-    ${RUN_ARGS} \
-    --name "fhtw_ros' \
+set -xv
+docker run -it \
+    "${RUN_ARGS[@]}" \
+    --name "fhtw_ros" \
     $IMAGE
-xhost -
+set +xv
 popd
