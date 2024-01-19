@@ -23,7 +23,7 @@ Make sure that you allow VcXsrv access to public and private networks
     ```
     1. Use the image on the docker hub:
     ```
-    docker pull georgno/fhtw-ros:latest
+    docker pull georgno/fhtw-ros:mre2_ear_ws2023
     ```
 2. To start the docker container execute the following commands:
    1. With local build:
@@ -45,7 +45,7 @@ Make sure that you allow VcXsrv access to public and private networks
         2. Double klick on [build_docker_container.bat](./build_docker_container.bat)
     2. Pull:
         ```
-        docker pull georgno/fhtw-ros:latest
+        docker pull georgno/fhtw-ros:mre2_ear_ws2023
         ```
 3. To start the docker container double klick on either [run_docker_from_hub.bat](./run_docker_from_hub.bat) or [run_docker_from_local_build.bat](./run_docker_from_local_build.bat)
 On the first start docker will ask for permissions to mount catkin_ws/src folder (for more see below).
