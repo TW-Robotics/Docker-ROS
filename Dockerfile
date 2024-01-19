@@ -95,13 +95,14 @@ RUN echo "UR5 packages Installed"
 # TODO: Gripper should be highly integrated
 RUN cd /home/$USERNAME/catkin_ws/src &&\
     /ros_entrypoint.sh git clone https://github.com/cambel/robotiq.git &&\
+    /ros_entrypoint.sh git clone https://github.com/pal-robotics/realsense_gazebo_plugin.git &&\
     /ros_entrypoint.sh git clone https://github.com/TW-Robotics/butler_2.0.git &&\
     cd .. &&\
     /ros_entrypoint.sh catkin_make &&\
     chown $USERNAME:$USERNAME --recursive /home/$USERNAME/catkin_ws
 	
-RUN apt update && \
-    apt-get install -y ros-noetic-flir-camera-driver
+# RUN apt update && \
+#     apt-get install -y ros-noetic-flir-camera-driver
 
 # # Installing MOBIPICK package from https://github.com/DFKI-NI/mir_robot
 # # This includes MIR100 and UR5 packages
