@@ -1,7 +1,7 @@
 FROM ros:noetic
 LABEL maintainer = "Georg Novotny FHTW"
 
-RUN apt update && \
+RUN apt-get update && \
     apt-get install -y bash-completion\
     less htop tmux xterm gosu python3-pip git vim python3-pip\
     ros-noetic-amcl ros-noetic-angles ros-noetic-base-local-planner ros-noetic-clear-costmap-recovery ros-noetic-global-planner* \
@@ -14,9 +14,11 @@ RUN apt update && \
     ros-noetic-turtlebot3-example ros-noetic-turtlebot3-navigation ros-noetic-turtlebot3-slam \
     ros-noetic-turtlebot3-teleop ros-noetic-urdf ros-noetic-voxel-grid ros-noetic-xacro \
     ros-noetic-rosdoc-lite ros-noetic-gmapping ros-noetic-rqt* ros-noetic-gazebo-ros ros-noetic-gazebo-plugins* \
-    ros-noetic-pid ros-noetic-turtlebot3-simulations --no-install-recommends\
+    ros-noetic-pid ros-noetic-turtlebot3-simulations \
+    ros-noetic-controller-manager ros-noetic-moveit ros-noetic-moveit-visual-tools ros-noetic-gazebo-ros-control ros-noetic-ros-controllers \
+    --no-install-recommends \
     && rm -rf /var/lib/apt/lists/
-RUN pip3 install jupyter 
+
 ENV USERNAME fhtw_user
 ARG USER_ID=1000
 ARG GROUP_ID=15214
@@ -45,16 +47,16 @@ RUN mkdir -p /home/$USERNAME/catkin_ws/src &&\
 RUN chown $USERNAME:$USERNAME --recursive /home/$USERNAME/catkin_ws
 RUN echo "source /opt/ros/noetic/setup.bash" >> /home/$USERNAME/.bashrc
 RUN echo "source /home/$USERNAME/catkin_ws/devel/setup.bash" >> /home/$USERNAME/.bashrc
-RUN pip3 install gdbgui
 
-RUN sudo apt update && sudo apt install -y checkinstall python-dev python-numpy libtbb2 \
+RUN sudo apt-get update && sudo apt-get install -y checkinstall python-dev python-numpy libtbb2 \
     libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev cmake git pkg-config \
     libavcodec-dev libavformat-dev libswscale-dev cmake git libgtk2.0-dev pkg-config libavcodec-dev \
     libavformat-dev libswscale-dev libopencv-dev build-essential checkinstall  cmake pkg-config \
     yasm libjpeg-dev libswscale-dev libdc1394-22-dev libxine2-dev  libv4l-dev python-dev python-numpy \
     libtbb-dev  qtbase5-dev  libgtk2.0-dev libfaac-dev libmp3lame-dev  libopencore-amrnb-dev \
     libopencore-amrwb-dev libtheora-dev  libvorbis-dev libxvidcore-dev x264 v4l-utils ffmpeg \
-    libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev
+    libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev \
+    libeigen3-dev libglfw3 libglfw3-dev
 
 RUN cd /tmp && git clone https://github.com/opencv/opencv.git  && git clone https://github.com/opencv/opencv_contrib.git && \
     cd opencv && git fetch -a && git checkout 3.4.13 && mkdir build && cd ../opencv_contrib &&  git fetch -a && git checkout 3.4.13 && cd ../opencv/build && \
@@ -72,7 +74,7 @@ RUN cd /tmp && git clone https://github.com/opencv/opencv.git  && git clone http
     cores=$(grep -c processor < /proc/cpuinfo) && if [ "$cores" -gt "1" ]; then cores=$((cores-1)); fi && \
     make -j"$cores" && \
     sudo checkinstall -y --pkgname "opencv3.4.13" && \
-    sudo apt install -f && \
+    sudo apt-get install -f && \
     sudo sh -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf' && \
     sudo ldconfig && \
     make clean && \
@@ -84,9 +86,13 @@ RUN cd /tmp && git clone https://github.com/opencv/opencv.git  && git clone http
 COPY ./docker_install /home/$USERNAME/docker_install
 RUN bash /home/$USERNAME/docker_install/install_vim.sh "${USERNAME}"
 RUN rm -rf /home/$USERNAME/docker_install
+RUN apt-get update && apt-get install -y --no-install-recommends python-is-python3
+RUN pip3 install jupyterlab
+RUN pip3 install --upgrade jupyter_core jupyter_client
+RUN pip3 install matplotlib numpy scikit-learn
 
-RUN echo 'if [ -z "$TMUX" ]; then tmux attach -t default || tmux new -s default; fi' >> /home/fhtw_user/.bashrc
-   
+RUN su ${USERNAME} -c "echo 'if [ -z \"\$TMUX\" ] && [ \"\$TERM_PROGRAM\" != \"vscode\" ] && [ -z \"\$SESSION_MANAGER\" ]; then tmux attach -t default || tmux new -s default; fi' >> /home/${USERNAME}/.bashrc"
+
 COPY ros_entrypoint.sh /
 RUN chmod +x /ros_entrypoint.sh
 ENTRYPOINT [ "/ros_entrypoint.sh" ]
