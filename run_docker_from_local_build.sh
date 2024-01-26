@@ -3,7 +3,7 @@
 XSOCK=/tmp/.X11-unix
 XAUTH=/root/.Xauthority
 SHARED_DIR=/home/fhtw_user/catkin_ws/src/fhtw
-HOST_DIR=$(pwd)/catkin_ws/src
+HOST_DIR=$(pwd)/fhtw
 
 echo -e "\e[32mMounting fodler:
     $HOST_DIR    to
