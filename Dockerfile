@@ -94,9 +94,9 @@ RUN echo "UR5 packages Installed"
 # Get Butler 2.0 package + Gripper
 # TODO: Gripper should be highly integrated
 RUN cd /home/$USERNAME/catkin_ws/src &&\
+    /ros_entrypoint.sh git clone https://github.com/TW-Robotics/butler_2.0.git &&\
     /ros_entrypoint.sh git clone https://github.com/cambel/robotiq.git &&\
     /ros_entrypoint.sh git clone https://github.com/pal-robotics/realsense_gazebo_plugin.git &&\
-    /ros_entrypoint.sh git clone https://github.com/TW-Robotics/butler_2.0.git &&\
     cd .. &&\
     /ros_entrypoint.sh catkin_make &&\
     chown $USERNAME:$USERNAME --recursive /home/$USERNAME/catkin_ws
