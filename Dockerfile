@@ -16,7 +16,8 @@ RUN apt update && \
     ros-noetic-pid ros-noetic-urdf-tutorial ros-noetic-gazebo-ros-control ros-noetic-gazebo-ros-pkgs \
     ros-noetic-soem ros-noetic-socketcan-interface ros-noetic-velocity-controllers \
     python3-vcstool ros-noetic-moveit ros-noetic-ros-control ros-noetic-ros-controllers \
-    ros-noetic-realsense2-camera ros-noetic-realsense2-description --no-install-recommends\
+    ros-noetic-realsense2-camera ros-noetic-realsense2-description \
+    ros-noetic-ur-robot-driver --no-install-recommends\
     && rm -rf /var/lib/apt/lists/
 RUN pip3 install jupyter 
 ENV USERNAME fhtw_user

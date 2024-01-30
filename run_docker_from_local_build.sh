@@ -11,7 +11,7 @@ echo -e "\e[32mMounting fodler:
 
 
 docker run \
-    -it --rm \
+    -it \
     --volume=$XSOCK:$XSOCK:rw \
     --volume=$XAUTH:$XAUTH:rw \
     --volume=$HOST_DIR:$SHARED_DIR:rw \

@@ -12,6 +12,6 @@ echo ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 docker volume create --driver local --opt type=none --opt device=%pfad% --opt o=bind fhtw_vol
 
-docker run -it --network bridge -p 8888:8888 --volume fhtw_vol:/home/fhtw_user/catkin_ws/src/fhtw --name "fhtw_ros" --privileged -e DISPLAY=%DISPLAY%  "fhtw/ros-noetic:latest" "bash"
+docker run -it --network bridge -p 5000:5000 --volume fhtw_vol:/home/fhtw_user/catkin_ws/src/fhtw --name "fhtw_ros" --privileged -e DISPLAY=%DISPLAY%  "fhtw/ros-noetic:latest" "bash"
 
 cmd /k
