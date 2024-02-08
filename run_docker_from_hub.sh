@@ -1,10 +1,11 @@
 #!/bin/sh
 
 XSOCK=/tmp/.X11-unix
-XAUTH=/root/.Xauthority
+XAUTH=/tmp/.X11-unix
 SHARED_DIR=/home/fhtw_user/catkin_ws/src/fhtw
 HOST_DIR=$(pwd)/catkin_ws/src
 
+xhost +
 echo -e "\e[32mMounting fodler:
     $HOST_DIR    to
     $SHARED_DIR\e[0m"
@@ -20,4 +21,5 @@ docker run \
     --privileged -v /dev/bus/usb:/dev/bus/usb \
     --net=host \
     --name "fhtw_ros" \
-    georgno/fhtw-ros:latest bash
+    ghcr.io/tw-robotics/docker-ros:latest bash
+xhost -

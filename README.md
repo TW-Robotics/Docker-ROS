@@ -6,65 +6,74 @@ Note that it is not possible to communicate with other hosts (e.g. Turtlebot) vi
 ## Prequisites
 
 1. Install docker (here are the instructions: [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/) [Windows](https://docs.docker.com/docker-for-windows/install/) )
-2. Copy the downloaded files to a destination of your choice. e.g. ~/Documents/Docker/FHTW/
+2. Copy the downloaded files of this repository to a destination of your choice. e.g. ~/Documents/TW-Robotics/ROS1
 
 ### Windows only
 
 3. Install VcXsrv as X11-Server: [link](https://sourceforge.net/projects/vcxsrv/files/latest/download)   
-Make sure that you allow VcXsrv access to public and private networks
+    Make sure that you allow VcXsrv access to public and private networks
+
+## Startup the Docker Container
+
+### Via VS Code Dev Container (Recommended if you are not familiar with the terminal)
+1. [Install Visual Studio Code](https://code.visualstudio.com/)
+2. Install the Remote Development Extension Pack
+3. Download this repository to a destination of your choice. e.g. ~/Documents/TW-Robotics/ROS1
+4. Open the folder in Visual Studio Code
+5. Open the command palette (Ctrl+Shift+P) and type `Dev Containers: Rebuild and Reopen in Container`
 
 
-## Linux
+### Via the terminal (Recommended if you are familiar with the terminal)
+To ease the start of the docker container we provide a script that starts the container with the correct settings.   
+See the [Linux](#linux) or [Windows](#windows) section for further instructions.
 
-1. Now you can either build the container from source or pull it from the docker hub (recommended).
-    1. Build locally:
-    ```
-    docker build -t "fhtw/ros-noetic:latest" --rm .
-    ```
-    1. Use the image on the docker hub:
-    ```
-    docker pull georgno/fhtw-ros:latest
-    ```
-2. To start the docker container execute the following commands:
-   1. With local build:
-   ```
-   bash run_docker_from_local_build.sh
-   ```
-   1. With hub:
-   ```
+#### Linux
+
+1. To start the docker container execute the following command in the terminal (this will download the docker container and start it):
+
+   ```shell
    bash run_docker_from_hub.sh
    ```
 
-## Windows
+#### Windows
 
 1. Start VcXsrv (XLaunch) with following configuration:   
 ![VcXsrv Configuration](./XmingConfig.PNG)
-2. Now you can either build the container from source or pull it from the docker hub
-    1. Build:
-        1. Navigate to the downloaded folder using file explorer
-        2. Double klick on [build_docker_container.bat](./build_docker_container.bat)
-    2. Pull:
-        ```
-        docker pull georgno/fhtw-ros:latest
-        ```
-3. To start the docker container double klick on either [run_docker_from_hub.bat](./run_docker_from_hub.bat) or [run_docker_from_local_build.bat](./run_docker_from_local_build.bat)
-On the first start docker will ask for permissions to mount catkin_ws/src folder (for more see below).
+2. To start the docker container double klick on [run_docker_from_hub.bat](./run_docker_from_hub.bat)  (this will download the docker container and start it):   
+    On the first start docker will ask for permissions to mount catkin_ws/src folder (for more see below).
 
 ## Development inside the Docker Container
 
-To make it easier to develope within the docker container, create a folder "./catkin_ws/src/" (which must be located directly in the folder from which you run the run_docker_from_hub/local). This folder is mounted into the docker container to "/home/fhtw_user/catkin_ws/src/fhtw". This allows you to save your projects on your host computer and execute them in the docker container.   
-
-If you want to work with a IDE we recommand to use Visual Studio Code and the following plugins:
-
-- Remote Development (ms-vscode-remote.vscode-remote-extensionpack) 
-- ROS (ms-iot.vscode-ros)
-- C++ Intellisense (austin.code-gnu-global)
-
-Further to work with multiple terminals inside docker we recommend using [tmux](https://thoughtbot.com/blog/a-tmux-crash-course) which is set as the default shell.
+### Working with the terminal
+To work with multiple terminals inside docker we recommend using [tmux]() which is set as the default shell.   
+See the following links on how to use tmux: 
+* [a quick and easy guide to tmux](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/)
+* [a tmux crash course](https://thoughtbot.com/blog/a-tmux-crash-course)
+* [tmux cheat sheet](https://tmuxcheatsheet.com/) 
 
 
-## Commit changes to the docker container
-To store changes (such as newly installed software) you need to commit these changes from your command line (we recommand powershell for windows and the normal terminal for linux).
-```
-# docker commit [CONTAINER_ID] fhtw_ros_local:latest -m "Commit message"
-```
+### Recommended IDE
+If you want to work with a IDE we recommand to use [Visual Studio Code](https://code.visualstudio.com/) and the following plugins:
+
+- [Remote Development](https://code.visualstudio.com/docs/remote/remote-overview)
+
+#### Setup Visual Studio Code
+
+1. Install Visual Studio Code
+2. Install the Remote Development Extension Pack
+3. [Start the docker container](#startup-the-docker-container)
+4. Use the remote development extension to connect to the docker container.
+5. In the VS Code that is attached to the docker container:
+   1. Open the command palette (Ctrl+Shift+P) and type `Dev Containers: Open Container Configuration File`
+   2. Paste the content of the file [devcontainer.json](./.devcontainer/devcontainer.json) into the file that was opened.
+6. Restart the VS Code and you are ready to go.
+
+<br/>
+<br/>
+
+__Attention:__ Docker containers are not persistent. This means that all changes made to the container are lost after the container is stopped. 
+    To ease with the development the folder `./catkin_ws/src/` is mounted into the docker container at the location `$HOME/caktin_ws/src/fhtw`. This allows you to save your projects on your host computer and execute them in the docker container.
+
+__Attention:__ Windows users are required to give docker permission to mount the folder `./catkin_ws/src/` into the container. This is done by clicking on the "Share it" button in the docker settings.
+
+__Attention:__ Windows users are advised to only work inside the docker container when modifying files or set the line endings of the files to LF. For more see the settings of your 

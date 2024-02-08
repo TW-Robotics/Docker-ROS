@@ -1,0 +1,30 @@
+{
+    "dockerFile": "Devcontainer.Dockerfile",
+    "remoteUser": "fhtw_user",
+    "initializeCommand": "xhost +",  // (only needed on Linux)
+    "onCreateCommand": "bash /ros_entrypoint.sh &",
+    "workspaceFolder": "/home/fhtw_user/catkin_ws/src/fhtw",
+    "workspaceMount": "source=${localWorkspaceFolder}/catkin_ws/src,target=/home/fhtw_user/catkin_ws/src/fhtw,type=bind,consistency=cached",
+	"runArgs": [
+		"--shm-size=512m", // this sets the shared memory size to 512MB (needed for rviz2)
+		"--privileged",
+		"--volume", "/tmp/.X11-unix:/tmp/.X11-unix", // (only needed on Linux)
+		"--name", "fhtw_ros"
+	],
+	"containerEnv": {
+		"DISPLAY": "${localEnv:DISPLAY}", // sets the X11 display for linux or the windows equivalent
+		"LIBGL_ALWAYS_SOFTWARE": "1", // Needed for software rendering of opengl (only needed on Linux)
+		"QT_X11_NO_MITSHM": "1" // this is needed to work on wayland
+	},
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-iot.vscode-ros",
+                "ms-python.python",
+                "ms-python.debugpy",
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-themes"
+            ]
+        }
+    }
+}

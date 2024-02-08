@@ -3,7 +3,7 @@ LABEL maintainer = "Georg Novotny FHTW"
 
 RUN apt-get update && \
     apt-get install -y bash-completion\
-    less htop tmux xterm gosu python3-pip git vim python3-pip\
+    less htop tmux xterm gosu python3-pip git vim python3-pip python3-catkin-tools python-is-python3 \
     ros-noetic-amcl ros-noetic-angles ros-noetic-base-local-planner ros-noetic-clear-costmap-recovery ros-noetic-global-planner* \
     ros-noetic-costmap-2d ros-noetic-diagnostic-updater ros-noetic-hls-lfcd-lds-driver ros-noetic-interactive-markers \
     ros-noetic-joint-state-publisher ros-noetic-kdl-parser ros-noetic-laser-geometry ros-noetic-map-msgs \
@@ -18,7 +18,6 @@ RUN apt-get update && \
     ros-noetic-controller-manager ros-noetic-moveit ros-noetic-moveit-visual-tools ros-noetic-gazebo-ros-control ros-noetic-ros-controllers \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/
-
 ENV USERNAME fhtw_user
 ARG USER_ID=1000
 ARG GROUP_ID=15214
@@ -47,6 +46,11 @@ RUN mkdir -p /home/$USERNAME/catkin_ws/src &&\
 RUN chown $USERNAME:$USERNAME --recursive /home/$USERNAME/catkin_ws
 RUN echo "source /opt/ros/noetic/setup.bash" >> /home/$USERNAME/.bashrc
 RUN echo "source /home/$USERNAME/catkin_ws/devel/setup.bash" >> /home/$USERNAME/.bashrc
+
+RUN pip3 install --upgrade pip
+RUN pip3 install jupyterlab
+RUN pip3 install --upgrade jupyter_core jupyter_client
+RUN pip3 install matplotlib numpy scikit-learn gdbgui
 
 RUN sudo apt-get update && sudo apt-get install -y checkinstall python-dev python-numpy libtbb2 \
     libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev cmake git pkg-config \
