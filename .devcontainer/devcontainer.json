@@ -1,14 +1,14 @@
 {
     "dockerFile": "Devcontainer.Dockerfile",
     "remoteUser": "fhtw_user",
-    "initializeCommand": "xhost +",  // (only needed on Linux)
+    // "initializeCommand": "xhost +",  // (only needed on Linux)
     "onCreateCommand": "bash /ros_entrypoint.sh &",
     "workspaceFolder": "/home/fhtw_user/catkin_ws/src/fhtw",
     "workspaceMount": "source=${localWorkspaceFolder}/catkin_ws/src,target=/home/fhtw_user/catkin_ws/src/fhtw,type=bind,consistency=cached",
 	"runArgs": [
 		"--shm-size=512m", // this sets the shared memory size to 512MB (needed for rviz2)
 		"--privileged",
-		"--volume", "/tmp/.X11-unix:/tmp/.X11-unix", // (only needed on Linux)
+		//"--volume", "/tmp/.X11-unix:/tmp/.X11-unix", // (only needed on Linux)
 		"--name", "fhtw_ros"
 	],
 	"containerEnv": {
