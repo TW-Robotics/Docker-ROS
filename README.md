@@ -32,7 +32,7 @@ We will be using a docker container for this course. This container will have al
 You can find the container images [here](https://hub.docker.com/repository/docker/georgno/fhtw-ros/general) and the tags follow the following convention:
 
 ```
-georgno/fhtw-ros:${ROS2-VERSION}-{ROS-VERSION}-ros_{UI}-{GRAPHICS-PLATFORM}
+georgno/fhtw-ros:${ROS2-VERSION}-{ROS-VERSION}-{UI}-{GRAPHICS-PLATFORM}
 ```
 , where:
 * __ROS2-VERSION__: The ROS2 distribution that you want to use. (humble, iron)
