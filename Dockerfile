@@ -1,7 +1,7 @@
 FROM georgno/fhtw-ros:latest
 
 # Update and get rid of python2
-RUN apt-get update && apt-get install -y --no-install-recommends python-is-python3
+RUN apt-get update && apt-get install -y --no-install-recommends python-is-python3 python3-tk
 # Install Jupyterlab
 RUN pip3 install --upgrade pip
 RUN pip3 install jupyterlab
