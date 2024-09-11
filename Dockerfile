@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends python-is-pytho
 RUN pip3 install --upgrade pip
 RUN pip3 install jupyterlab
 RUN pip3 install --upgrade jupyter_core jupyter_client
-RUN pip3 install matplotlib numpy scikit-learn
+RUN pip3 install matplotlib numpy scikit-learn scipy
 
 # Set shell env variable for jupyterlab (this fixes autocompletion in web-based shell)
 ENV SHELL=/bin/bash 
